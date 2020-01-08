@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.DrugsDao">
+
+    <!--  添加药品信息  -->
+    <insert id="addDrugs">
+        insert into information(name,category,specifications,manufacturer,price,stock)
+        values (#{name},#{category},#{specifications},#{manufacturer},#{price},#{stock})
+    </insert>
+
+    <!--  根据id查询药品信息  -->
+    <select id="getDrugsById" resultType="com.example.demo.entity.Drugs">
+        select id,name,category,specifications,manufacturer,price,stock
+        from information where id=#{id}
+    </select>
+
+    <!--  根据id修改药品信息  -->
+    <update id="updateDrugsById">
+        update information set name=#{name},category=#{category},specifications=#{specifications},
+                manufacturer=#{manufacturer},price=#{price},stock=#{stock}
+        where id=#{id}
+    </update>
+
+    <!--  根据id删除药品信息  -->
+    <delete id="deleteDrugsById">
+        delete from information where id=#{id}
+    </delete>
+
+    <!--  根据药品名称模糊查询  -->
+    <select id="getNameLike" resultType="com.example.demo.entity.Drugs">
+        select id,name,category,specifications,manufacturer,price,stock
+        from information where name like concat('%',concat(#{name},'%'))
+    </select>
+
+    <!--  查询全部药品信息  -->
+    <select id="selectDrugsAll" resultType="com.example.demo.entity.Drugs">
+        select name,category,specifications,manufacturer,price,stock
+        from information
+    </select>
+
+</mapper>

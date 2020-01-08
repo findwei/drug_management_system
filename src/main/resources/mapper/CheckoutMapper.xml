@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.CheckoutDao">
+
+    <!--  添加时模糊查询药品名  -->
+    <select id="getNameLike" resultType="com.example.demo.entity.Drugs">
+        select id,name
+        from information where name like concat('%',concat(#{name},'%'))
+    </select>
+
+    <!--  添加时模糊查询生产厂家  -->
+    <select id="getManufacturerLike" resultType="com.example.demo.entity.Drugs">
+        select manufacturer
+        from information where manufacturer like concat('%',concat(#{name},'%'))
+    </select>
+
+    <!--  出库时查询库存  -->
+    <select id="selectStock" resultType="Integer">
+        select stock from information where id=#{id}
+    </select>
+
+    <!--  出库时库存变动  -->
+    <update id="updateStockById">
+        update information set stock=#{stock}
+        where id=#{id}
+    </update>
+
+    <!--  添加出库信息  -->
+    <insert id="addCheckout">
+        insert into checkout(name,outgoing_quantity,information_stock,operator,price)
+        values (#{name},#{outgoingQuantity},#{informationStock},#{operator},#{price})
+    </insert>
+
+    <!--  查询全部出库信息  -->
+    <select id="selectCheckoutAll" resultType="com.example.demo.entity.Checkout">
+        select name,outgoing_quantity as outgoingQuantity,information_stock as informationStock,operator,createtime,price
+        from checkout
+    </select>
+
+    <!--  根据操作人模糊查询  -->
+    <select id="getOperatorLikeCheckout" resultType="com.example.demo.entity.Checkout">
+        select id,name,outgoing_quantity as outgoingQuantity,information_stock as informationStock,operator,createtime,price
+        from checkout where operator like concat('%',concat(#{name},'%'))
+    </select>
+
+</mapper>

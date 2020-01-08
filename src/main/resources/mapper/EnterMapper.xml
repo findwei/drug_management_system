@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.EnterDao">
+
+    <!--  添加时模糊查询药品名  -->
+    <select id="getNameLike" resultType="com.example.demo.entity.Drugs">
+        select id,name
+        from information where name like concat('%',concat(#{name},'%'))
+    </select>
+
+    <!--  添加时模糊查询生产厂家  -->
+    <select id="getManufacturerLike" resultType="com.example.demo.entity.Drugs">
+        select manufacturer
+        from information where manufacturer like concat('%',concat(#{name},'%'))
+    </select>
+
+    <!--  入库时查询库存  -->
+    <select id="selectStock" resultType="Integer">
+        select stock from information where id=#{id}
+    </select>
+
+    <!--  入库时库存变动  -->
+    <update id="updateStockById">
+        update information set stock=#{stock}
+        where id=#{id}
+    </update>
+
+    <!--  添加入库信息  -->
+    <insert id="addEnter">
+        insert into enter(name,quantity_warehousing,information_stock,provider,operator,price)
+        values (#{name},#{quantityWarehousing},#{informationStock},#{provider},#{operator},#{price})
+    </insert>
+
+    <!--  查询全部入库信息  -->
+    <select id="selectEnterAll" resultType="com.example.demo.entity.Enter">
+        select name,quantity_warehousing as quantityWarehousing,information_stock as informationStock,provider,operator,createtime,price
+        from enter
+    </select>
+
+    <!--  根据操作人模糊查询  -->
+    <select id="getOperatorLike" resultType="com.example.demo.entity.Enter">
+        select id,name,quantity_warehousing as quantityWarehousing,information_stock as informationStock,provider,operator,createtime,price
+        from enter where operator like concat('%',concat(#{name},'%'))
+    </select>
+
+</mapper>
