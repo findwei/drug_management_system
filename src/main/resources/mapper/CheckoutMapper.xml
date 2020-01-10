@@ -16,13 +16,13 @@
 
     <!--  出库时查询库存  -->
     <select id="selectStock" resultType="Integer">
-        select stock from information where id=#{id}
+        select stock from information where name=#{name}
     </select>
 
     <!--  出库时库存变动  -->
     <update id="updateStockById">
         update information set stock=#{stock}
-        where id=#{id}
+        where name=#{name}
     </update>
 
     <!--  添加出库信息  -->

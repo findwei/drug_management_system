@@ -17,6 +17,9 @@ import java.util.Map;
 @Api(value = "出库管理",description = "出库管理")
 public class CheckoutController {
     @Autowired
+
+
+
     private CheckoutService checkoutService;
 
 
@@ -28,9 +31,9 @@ public class CheckoutController {
 
     @GetMapping("/addCheckout")
     @ApiOperation("添加出库信息")
-    public Map<String,Object> addCheckout(@RequestParam(value = "id",required = true) Integer id,@RequestParam(value = "name",required = true) String name,@RequestParam(value = "outgoingQuantity",required = true) Integer outgoingQuantity,
+    public Map<String,Object> addCheckout(@RequestParam(value = "name",required = true) String name,@RequestParam(value = "outgoingQuantity",required = true) Integer outgoingQuantity,
                                        @RequestParam(value = "operator",required = true) String operator,@RequestParam(value = "price",required = true) double price){
-        return checkoutService.addCheckout(id,name,outgoingQuantity,operator,price);
+        return checkoutService.addCheckout(name,outgoingQuantity,operator,price);
     }
 
     @GetMapping("/selectCheckoutAll")
@@ -41,14 +44,15 @@ public class CheckoutController {
 
     @GetMapping("/getOperatorLikeCheckout")
     @ApiOperation("根据操作人模糊查询")
-    public Map<String,Object> getOperatorLikeCheckout(@RequestParam(value = "name",required = true) String name,@RequestParam(value = "page",required = true)Integer page, @RequestParam(value = "pageSize",required = true)Integer pageSize){
+    public Map<String,Object> getOperatorLikeCheckout (@RequestParam(value = "name",required = true) String name,@RequestParam(value = "page",required = true)Integer page, @RequestParam(value = "pageSize",required = true)Integer pageSize){
         return checkoutService.getOperatorLikeCheckout(name, page, pageSize);
     }
 
     @GetMapping("/generateCheckoutTable")
     @ApiOperation("导出excel表")
-    public void generateCheckoutTable(){
-        checkoutService.generateCheckoutTable();
+    public String generateCheckoutTable(){
+        String path = checkoutService.generateCheckoutTable();
+        return path;
     }
 
 }

@@ -1,9 +1,7 @@
 package com.example.demo.service.Impl;
-
 import com.example.demo.dao.CheckoutDao;
 import com.example.demo.entity.Checkout;
 import com.example.demo.entity.Drugs;
-import com.example.demo.entity.Enter;
 import com.example.demo.entity.PagedResult;
 import com.example.demo.service.CheckoutService;
 import com.github.pagehelper.PageHelper;
@@ -51,17 +49,16 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     /**
      * 添加出库信息
-     * @param id
      * @param name
      * @param outgoingQuantity
      * @param operator
      * @param price
      * @return
      */
-    public Map<String,Object> addCheckout(Integer id,String name,Integer outgoingQuantity,String operator,double price){
+    public Map<String,Object> addCheckout(String name,Integer outgoingQuantity,String operator,double price){
         Map<String, Object> map = new HashMap<>();
-        Integer stock = checkoutDao.selectStock(id);
-        checkoutDao.updateStockById(stock-outgoingQuantity,id);
+        Integer stock = checkoutDao.selectStock(name);
+        checkoutDao.updateStockById(stock-outgoingQuantity,name);
         int a = checkoutDao.addCheckout(name,outgoingQuantity,stock-outgoingQuantity,operator,price);
         if(a==1){
             map.put("msg","添加成功");
@@ -167,7 +164,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     /**
      * 导出enter表
      */
-    public void generateCheckoutTable(){
+    public String generateCheckoutTable(){
         List<Checkout> checkoutList = checkoutDao.selectCheckoutAll();
         for (Checkout checkout:checkoutList) {
             String[] str = checkout.getCreateTime().split(" ");
@@ -227,7 +224,8 @@ public class CheckoutServiceImpl implements CheckoutService {
         } catch (WriteException e) {
             e.printStackTrace();
         }
-
+        return "导出成功";
     }
+
 
 }

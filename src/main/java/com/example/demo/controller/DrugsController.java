@@ -58,8 +58,10 @@ public class DrugsController {
 
     @GetMapping("/generateDrugsTable")
     @ApiOperation("导出excl表")
-    public void generateDrugsTable(){
-        drugsService.generateDrugsTable();
+    public String generateDrugsTable(){
+
+        String path = drugsService.generateDrugsTable();
+        return path;
     }
 
 }

@@ -33,9 +33,9 @@ public class EnterController {
 
     @GetMapping("/addEnter")
     @ApiOperation("添加入库信息")
-    public Map<String,Object> addEnter(@RequestParam(value = "id",required = true) Integer id,@RequestParam(value = "name",required = true) String name,@RequestParam(value = "quantityWarehousing",required = true) Integer quantityWarehousing,
+    public Map<String,Object> addEnter(@RequestParam(value = "name",required = true) String name,@RequestParam(value = "quantityWarehousing",required = true) Integer quantityWarehousing,
                                        @RequestParam(value = "provider",required = true) String provider,@RequestParam(value = "operator",required = true) String operator,@RequestParam(value = "price",required = true) double price){
-        return enterService.addEnter(id,name,quantityWarehousing,provider,operator,price);
+        return enterService.addEnter(name,quantityWarehousing,provider,operator,price);
     }
 
     @GetMapping("/selectEnterAll")
@@ -52,8 +52,10 @@ public class EnterController {
 
     @GetMapping("/generateEnterTable")
     @ApiOperation("导出excel表")
-    public void generateEnterTable(){
-        enterService.generateEnterTable();
+    public String generateEnterTable(){
+
+        String path = enterService.generateEnterTable();
+        return path;
     }
 
 }

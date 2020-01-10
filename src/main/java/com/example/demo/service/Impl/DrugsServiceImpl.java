@@ -206,7 +206,7 @@ public class DrugsServiceImpl implements DrugsService {
     /**
      * 导出enter表
      */
-    public void generateDrugsTable(){
+    public String generateDrugsTable(){
         List<Drugs> drugsList = drugsDao.selectDrugsAll();
         try {
             //1:创建excel文件
@@ -262,7 +262,7 @@ public class DrugsServiceImpl implements DrugsService {
         } catch (WriteException e) {
             e.printStackTrace();
         }
-
+        return "导出成功";
     }
 
 }

@@ -71,7 +71,6 @@ public class EnterServiceImpl implements EnterService {
 
     /**
      * 添加入库信息
-     * @param id
      * @param name
      * @param quantityWarehousing
      * @param provider
@@ -79,10 +78,10 @@ public class EnterServiceImpl implements EnterService {
      * @param price
      * @return
      */
-    public Map<String,Object> addEnter(Integer id,String name,Integer quantityWarehousing,String provider,String operator,double price){
+    public Map<String,Object> addEnter(String name,Integer quantityWarehousing,String provider,String operator,double price){
         Map<String, Object> map = new HashMap<>();
-        Integer stock = enterDao.selectStock(id);
-        enterDao.updateStockById(stock+quantityWarehousing,id);
+        Integer stock = enterDao.selectStock(name);
+        enterDao.updateStockById(stock+quantityWarehousing,name);
         int a = enterDao.addEnter(name,quantityWarehousing,stock+quantityWarehousing,provider,operator,price);
         if(a==1){
             map.put("msg","添加成功");
@@ -188,7 +187,7 @@ public class EnterServiceImpl implements EnterService {
     /**
      * 导出enter表
      */
-    public void generateEnterTable(){
+    public String generateEnterTable(){
         List<Enter> enterList = enterDao.selectEnterAll();
         for (Enter enter:enterList) {
             String[] str = enter.getCreateTime().split(" ");
@@ -251,7 +250,7 @@ public class EnterServiceImpl implements EnterService {
         } catch (WriteException e) {
             e.printStackTrace();
         }
-
+        return "导出成功";
     }
 
 }

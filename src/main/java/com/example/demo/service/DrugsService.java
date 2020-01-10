@@ -18,5 +18,5 @@ public interface DrugsService {
 
     PagedResult selectDrugsAll(Integer page, Integer pageSize);
 
-    void generateDrugsTable();
+    String generateDrugsTable();
 }

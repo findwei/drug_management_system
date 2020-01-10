@@ -14,9 +14,9 @@ public interface EnterDao {
 
     List<Drugs> getManufacturerLike(String name);
 
-    Integer selectStock(Integer id);
+    Integer selectStock(String name);
 
-    int updateStockById(@Param("stock")Integer stock,@Param("id")Integer id);
+    int updateStockById(@Param("stock")Integer stock,@Param("name")String name);
 
     int addEnter(@Param("name") String name, @Param("quantityWarehousing") Integer quantityWarehousing,@Param("informationStock")Integer informationStock,@Param("provider") String provider,@Param("operator") String operator,@Param("price") double price);
 
